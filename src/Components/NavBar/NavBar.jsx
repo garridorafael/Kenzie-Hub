@@ -1,5 +1,5 @@
 import { CustomNav } from "./index";
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/Logo.svg";
 import { StyledContainer } from "../../globalStyles";
 import { Link } from "react-router-dom";
 
