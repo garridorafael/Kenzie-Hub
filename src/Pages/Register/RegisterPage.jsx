@@ -10,6 +10,7 @@ import { formSchema } from "../../Components/FormSchema";
 import { api } from "../../services/api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function Register() {
   const {
