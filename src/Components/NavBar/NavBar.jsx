@@ -29,3 +29,16 @@ export function NavBarRegister({ text, onClick }) {
     </CustomNav>
   );
 }
+
+export function NavBarDashboard({ text, onClick }) {
+  return (
+    <CustomNav>
+      <div className="navBox">
+        <img src={logo} alt="logo Kenzie Hub" />
+        <Link className="logout" to={"/"}>
+          {text}
+        </Link>
+      </div>
+    </CustomNav>
+  );
+}

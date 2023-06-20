@@ -7,7 +7,7 @@ export const CustomNav = styled.nav`
   max-width: 1200px;
   width: 100%;
 
-  a{
+  a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -15,19 +15,19 @@ export const CustomNav = styled.nav`
     height: 2rem;
     background-color: var(--color-grey-3);
     border-radius: 4px;
-    font-size: .625rem;
+    font-size: 0.625rem;
     font-weight: 600;
     line-height: 14px;
     color: var(--color-grey-0);
     text-align: center;
     margin-top: 10px;
 
-    &:hover{
-        cursor: pointer;
+    &:hover {
+      cursor: pointer;
     }
   }
 
-  .logout{
+  .logout {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -35,19 +35,33 @@ export const CustomNav = styled.nav`
     height: 2rem;
     background-color: var(--color-grey-3);
     border-radius: 4px;
-    font-size: .625rem;
+    font-size: 0.625rem;
     font-weight: 600;
     line-height: 14px;
     color: var(--color-grey-0);
     text-align: center;
     margin-top: 10px;
 
-    &:hover{
-        cursor: pointer;
+    &:hover {
+      cursor: pointer;
     }
   }
 
-  .navContainer{
+  .navContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 296px;
+    margin-bottom: 20px;
+    gap: 10px;
+
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+
+  .navBox {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -55,11 +69,9 @@ export const CustomNav = styled.nav`
     max-width: 900px;
     margin-bottom: 20px;
     gap: 10px;
-        
-       
-        width: 100%;
-        margin: 0 auto;
-        padding: 1rem;
-      
+
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
   }
 `;
