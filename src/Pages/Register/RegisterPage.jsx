@@ -7,10 +7,9 @@ import { NavBarRegister } from "../../Components/NavBar/NavBar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { formSchema } from "../../Components/FormSchema";
-import { api } from "../../services/api";
+import { useContext } from "react";
+import { UserContext } from "../../providers/userProvider";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 export function Register() {
   const {
@@ -21,30 +20,13 @@ export function Register() {
     resolver: zodResolver(formSchema),
   });
 
-  const [submitting, setSubmitting] = useState(false);
-  const navigate = useNavigate();
+  const [ submitting, setSubmitting ] = useState(false)
 
-  const submit = async (formData) => {
-    setSubmitting(true);
-    try {
-      const { data } = await api.post("/users", formData);
-      toast.success("Cadastro realizado com sucesso!");
-      navigate("/");
-    } catch (error) {
-      toast.error("Erro! Por favor, revise os campos e tente novamente", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      console.log(error);
-    }
-    setSubmitting(false);
-  };
+  const { userRegister } = useContext(UserContext);
+
+  const submit = (formData) => {
+    userRegister(formData, setSubmitting);
+}
 
   return (
     <StyledContainerRegister>

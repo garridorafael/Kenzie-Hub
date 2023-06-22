@@ -11,4 +11,10 @@ export const InputStyled = styled.input`
   padding-left: 10px;
   box-sizing: border-box;
   font-size: 0.8125rem;
+
+  &:read-only{
+    &:hover{
+      cursor: not-allowed;
+    }
+  }
 `;

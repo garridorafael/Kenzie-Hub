@@ -2,6 +2,8 @@ import { CustomNav } from "./index";
 import logo from "../../assets/Logo.svg";
 import { StyledContainer } from "../../globalStyles";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../providers/userProvider";
 
 export function NavBar() {
   return (
@@ -31,11 +33,14 @@ export function NavBarRegister({ text, onClick }) {
 }
 
 export function NavBarDashboard({ text, onClick }) {
+
+  const { logout } = useContext(UserContext);
+
   return (
     <CustomNav>
       <div className="navBox">
         <img src={logo} alt="logo Kenzie Hub" />
-        <Link className="logout" to={"/"}>
+        <Link className="logout" to={"/"} onClick={() => logout()}>
           {text}
         </Link>
       </div>

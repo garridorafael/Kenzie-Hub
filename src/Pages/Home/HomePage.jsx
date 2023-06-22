@@ -3,13 +3,13 @@ import { CustomForm } from "./index";
 import { ButtonStyled, LinkStyled } from "../../Styles/Button";
 import { InputStyled } from "../../Styles/Input";
 import { NavBar } from "../../Components/NavBar/NavBar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { loginSchema } from "./loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { api } from "../../services/api";
-import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserContext } from "../../providers/userProvider";
 
 export function Home() {
   const {
@@ -20,35 +20,14 @@ export function Home() {
     resolver: zodResolver(loginSchema),
   });
 
-  const navigate = useNavigate();
+  const [ submitting, setSubmitting ] = useState(false)
 
-  const [submitting, setSubmitting] = useState(false);
+  const { userLogin } = useContext(UserContext);
 
-  const submit = async (formData) => {
-    try {
-      setSubmitting(true);
-      const { data } = await api.post("/sessions", formData);
-      console.log(data);
-      localStorage.setItem("userData", JSON.stringify(data.user));
-      localStorage.setItem("@TOKEN", data.token);
-      localStorage.setItem("@USERID", data.user.id);
-      toast.success("Login realizado com sucesso!");
-      navigate("/dashboard");
-    } catch (error) {
-      toast.error("Usuário ou senha inválidos", {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      console.log(error);
-    }
-    setSubmitting(false);
-  };
+  const submit = (formData) => {
+    userLogin(formData, setSubmitting);
+}
+
   return (
     <>
       <NavBar />
@@ -79,6 +58,7 @@ export function Home() {
           <ButtonStyled
             type="submit"
             backgroundcolor="var(--color-color-primary)"
+            disabled={submitting}
           >
             {submitting ? "Logando..." : "Entrar"}
           </ButtonStyled>

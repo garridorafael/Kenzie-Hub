@@ -51,4 +51,18 @@ export const CustomForm = styled.form`
       cursor: pointer;
     }
   }
+
+  .buttonsFooter{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .deleteButton{
+      margin-top: 20px;
+    }
+
+    .registerButton{
+      width: 163px;
+    }
+  }
 `;
