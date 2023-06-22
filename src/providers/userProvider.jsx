@@ -3,7 +3,6 @@ import { createContext } from "react";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 export const UserContext = createContext({});
 
@@ -14,7 +13,11 @@ export const UseProvider = ({ children }) => {
 
   const [techList, setTechList] = useState([]);
 
-  const currentPath = window.location.pathname;
+  const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
+
+  function closeCreateModal() {
+    setCreateModalIsOpen(false);
+  }
 
   const userLogin = async (formData, setSubmitting) => {
     try {
@@ -36,7 +39,7 @@ export const UseProvider = ({ children }) => {
         progress: undefined,
         theme: "dark",
       });
-      console.log(error);
+      toast.error(`${error.message}`);
     }
     setSubmitting(false);
   };
@@ -64,7 +67,7 @@ export const UseProvider = ({ children }) => {
         progress: undefined,
         theme: "dark",
       });
-      console.log(error);
+      toast.error(`${error.message}`);
     }
     setSubmitting(false);
   };
@@ -78,8 +81,8 @@ export const UseProvider = ({ children }) => {
         },
       });
       toast.success("Tecnologia adicionada com sucesso!");
-      setTechList((prevTechList) => [...prevTechList, data])
-      closeModal();
+      setTechList((prevTechList) => [...prevTechList, data]);
+      closeCreateModal();
     } catch (error) {
       toast.error(`${error.message}`);
     }
@@ -88,49 +91,57 @@ export const UseProvider = ({ children }) => {
   const deleteTech = async (techId) => {
     const token = localStorage.getItem("@TOKEN");
     try {
-        await api.delete(`/users/techs/${techId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-              },
-        })
-        setTechList((prevTechList) =>
-      prevTechList.filter((tech) => tech.id !== techId)
-    );
+      await api.delete(`/users/techs/${techId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTechList((prevTechList) =>
+        prevTechList.filter((tech) => tech.id !== techId)
+      );
     } catch (error) {
-        toast.error(`${error.message}`)
+      toast.error(`${error.message}`);
     }
-  }
+  };
 
-  useEffect(() => {
+  const editTech = async (techId, formData) => {
     const token = localStorage.getItem("@TOKEN");
-    const id = localStorage.getItem("@USERID");
-
-    const loadUser = async () => {
-      try {
-        //   setLoading(true);
-        const { data } = await api.get(`/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    try {
+      const { data } = await api.put(`/users/techs/${techId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTechList((prevTechList) => {
+        const updatedTechList = prevTechList.map((tech) => {
+          if (tech.id === techId) {
+            return { ...tech, status: formData.status };
+          }
+          return tech;
         });
-        setUser(data);
-        setTechList(data.techs);
-        navigate(currentPath);
-      } catch (error) {
-        console.log(error);
-      } //finally {
-      //       setLoading(false);
-      //    }
-    };
 
-    if (token && id) {
-      loadUser();
+        return updatedTechList;
+      });
+    } catch (error) {
+      toast.error(`${error.message}`);
     }
-  }, []);
+  };
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, userLogin, userRegister, logout, techList, addTech, deleteTech}}
+      value={{
+        user,
+        setUser,
+        userLogin,
+        userRegister,
+        logout,
+        techList,
+        addTech,
+        editTech,
+        deleteTech,
+        setTechList,
+        setUser,
+      }}
     >
       {children}
     </UserContext.Provider>

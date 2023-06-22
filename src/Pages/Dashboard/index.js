@@ -47,24 +47,24 @@ export const MainContent = styled.main`
     max-width: 900px;
   }
 
-  .contentBoxMain{
+  .contentBoxMain {
     width: 100%;
     margin: 0 auto;
     padding: 1rem;
     max-width: 900px;
     max-height: 410px;
     overflow-y: auto;
-    background-color: var(--color-grey-3); 
+    background-color: var(--color-grey-3);
     border-radius: 4px;
 
-    ul{
+    ul {
       display: flex;
       flex-direction: column;
       gap: 12px;
       height: 100%;
     }
 
-    li{
+    li {
       background-color: var(--color-grey-4);
       display: flex;
       justify-content: space-between;
@@ -73,20 +73,20 @@ export const MainContent = styled.main`
       border-radius: 4px;
       padding: 0 10px;
 
-      h3{
+      h3 {
         font-weight: 700;
-        font-size: .875rem;
+        font-size: 0.875rem;
         line-height: 1.5rem;
         margin: 0;
       }
 
-      span{
-        font-size: .75rem;
+      span {
+        font-size: 0.75rem;
         line-height: 1.375rem;
         color: var(--color-grey-1);
       }
 
-      &:hover{
+      &:hover {
         cursor: pointer;
         background-color: var(--color-grey-2);
       }
@@ -108,12 +108,12 @@ export const MainContent = styled.main`
     line-height: 25px;
   }
 
-  .addButton{
+  .addButton {
     width: 33px;
     height: 33px;
   }
 
-  .mainHeader{
+  .mainHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -124,12 +124,10 @@ export const MainContent = styled.main`
     max-width: 900px;
     margin-bottom: 20px;
 
-    h3{
+    h3 {
       margin: 0;
     }
   }
-
-  
 `;
 
 export const CustomModal = styled(Modal)`
@@ -138,20 +136,19 @@ export const CustomModal = styled(Modal)`
   background-color: var(--color-grey-3);
   border-radius: 4px;
   outline: none;
-  
-  
-  .modalContainer{
+
+  .modalContainer {
     align-self: center;
     justify-self: center;
     max-width: 369px;
     border-radius: 4px;
     box-sizing: border-box;
 
-    form{
+    form {
       gap: 22px;
     }
 
-    .modalHeader{
+    .modalHeader {
       border-radius: 4px 4px 0 0;
       display: flex;
       justify-content: space-between;
@@ -159,21 +156,21 @@ export const CustomModal = styled(Modal)`
       padding: 8px 18px;
       background-color: var(--color-grey-2);
 
-      h2{
+      h2 {
         color: var(--color-grey-0);
         font-weight: 700;
-        font-size: .75rem;
+        font-size: 0.75rem;
         line-height: 1.1875rem;
       }
 
-      button{
+      button {
         background: transparent;
         font-weight: 600;
-        font-size: .8125rem;
+        font-size: 0.8125rem;
         line-height: 1.3125rem;
         color: var(--color-grey-1);
 
-        &:hover{
+        &:hover {
           cursor: pointer;
           scale: 1.3;
         }
@@ -181,14 +178,28 @@ export const CustomModal = styled(Modal)`
     }
   }
 
-  .registerButton{
+  .registerButton {
     margin-top: 20px;
   }
 
-  .deleteButton{
+  .deleteButton {
     width: 79px;
     height: 39px;
     background-color: var(--color-grey-1);
     border: none;
+  }
+`;
+
+export const LoadingContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-grey-4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    font-size: clamp(1.5625rem, 6vw, 3.125rem);
+    color: var(--color-grey-0);
   }
 `;
