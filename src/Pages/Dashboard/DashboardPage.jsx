@@ -21,13 +21,13 @@ export function Dashboard() {
     formState: { errors },
   } = useForm({});
 
-  const { user, addTech, deleteTech, editTech } = useContext(UserContext);
+  const { user, addTech, techList, deleteTech, editTech } = useContext(UserContext);
 
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [selectedTech, setSelectedTech] = useState(null);
 
-  const [techList, setTechList] = useState(user.techs);
+  
 
   const [submitting, setSubmitting] = useState(false);
 
@@ -50,8 +50,6 @@ export function Dashboard() {
   }
 
   function submit(formData) {
-    console.log(register);
-    console.log(formData);
     if (selectedTech) {
       const updatedTech = { ...selectedTech, status: formData.status };
       addTech(updatedTech);
