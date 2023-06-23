@@ -3,17 +3,48 @@ import { createContext } from "react";
 import { toast } from "react-toastify";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const UserContext = createContext({});
+const currentPath = window.location.pathname;
 
 export const UseProvider = ({ children }) => {
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   const [techList, setTechList] = useState([]);
 
+  const [loading, setLoading] = useState(false);
+
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@TOKEN");
+    const id = localStorage.getItem("@USERID");
+
+    const loadUser = async () => {
+      try {
+        setLoading(true);
+        const { data } = await api.get(`/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUser(data);
+        setTechList(data.techs);
+        navigate(currentPath);
+      } catch (error) {
+        toast.error(`${error.message}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (token && id) {
+      loadUser();
+    }
+  }, []);
 
   function closeCreateModal() {
     setCreateModalIsOpen(false);
@@ -21,9 +52,11 @@ export const UseProvider = ({ children }) => {
 
   const userLogin = async (formData, setSubmitting) => {
     try {
+      setLoading(true);
       setSubmitting(true);
       const { data } = await api.post("/sessions", formData);
       setUser(data.user);
+      setTechList(data.user.techs)
       localStorage.setItem("@TOKEN", data.token);
       localStorage.setItem("@USERID", data.user.id);
       toast.success("Login realizado com sucesso!");
@@ -40,8 +73,10 @@ export const UseProvider = ({ children }) => {
         theme: "dark",
       });
       toast.error(`${error.message}`);
+      setSubmitting(false);
+    } finally {
+      setLoading(false);
     }
-    setSubmitting(false);
   };
 
   const logout = () => {
@@ -140,7 +175,7 @@ export const UseProvider = ({ children }) => {
         editTech,
         deleteTech,
         setTechList,
-        setUser,
+        loading,
       }}
     >
       {children}

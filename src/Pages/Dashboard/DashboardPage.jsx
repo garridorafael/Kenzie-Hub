@@ -13,10 +13,7 @@ import { InputStyled } from "../../Styles/Input";
 import { CustomForm } from "../Home";
 import { CustomSelect } from "../Register";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import { api } from "../../services/api";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 export function Dashboard() {
   const {
@@ -33,42 +30,15 @@ export function Dashboard() {
     editTech,
     setTechList,
     setUser,
+    loading,
   } = useContext(UserContext);
 
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
   const [selectedTech, setSelectedTech] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const currentPath = window.location.pathname;
-  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("@TOKEN");
-    const id = localStorage.getItem("@USERID");
-
-    const loadUser = async () => {
-      try {
-        setLoading(true);
-        const { data } = await api.get(`/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(data);
-        setTechList(data.techs);
-        navigate(currentPath);
-      } catch (error) {
-        toast.error(`${error.message}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (token && id) {
-      loadUser();
-    }
-  }, []);
 
   function openCreateModal() {
     setCreateModalIsOpen(true);

@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { GlobalStyle } from "./globalStyles";
 import { RoutesMain } from "./Routes/RoutesMain";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { UserContext } from "./providers/userProvider";
+import { LoadingContainer } from "./Pages/Dashboard";
 
 function App() {
+  const { loading } = useContext(UserContext);
   return (
     <>
       <GlobalStyle />
-      <RoutesMain />
+      {loading ? (
+        <LoadingContainer>
+          <h2>Carregando...</h2>
+        </LoadingContainer>
+      ) : (
+        <RoutesMain />
+      )}
+
       <ToastContainer
         position="top-right"
         autoClose={2000}
