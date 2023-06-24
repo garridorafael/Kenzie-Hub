@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { UserContext } from "../../providers/userProvider";
 
-export function Home() {
+export const Home = () => {
   const {
     register,
     handleSubmit,

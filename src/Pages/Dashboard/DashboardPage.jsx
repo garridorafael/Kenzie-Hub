@@ -14,24 +14,19 @@ import { CustomForm } from "../Home";
 import { CustomSelect } from "../Register";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { techContext } from "../../providers/techProvider";
 
-export function Dashboard() {
+export const Dashboard = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({});
 
-  const {
-    user,
-    addTech,
-    techList,
-    deleteTech,
-    editTech,
-    setTechList,
-    setUser,
-    loading,
-  } = useContext(UserContext);
+  const { addTech, techList, setTechList, deleteTech, editTech } =
+    useContext(techContext);
+
+  const { user, setUser, loading } = useContext(UserContext);
 
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
   const [editModalIsOpen, setEditModalIsOpen] = useState(false);
@@ -40,40 +35,40 @@ export function Dashboard() {
 
   const navigate = useNavigate();
 
-  function openCreateModal() {
+  const openCreateModal = () => {
     setCreateModalIsOpen(true);
-  }
-
-  function openEditModal(tech) {
+    }
+    
+    const openEditModal = (tech) => {
     setSelectedTech(tech);
     setEditModalIsOpen(true);
-  }
-
-  function closeCreateModal() {
+    }
+    
+    const closeCreateModal = () => {
     setCreateModalIsOpen(false);
-  }
-
-  function closeEditModal() {
+    }
+    
+    const closeEditModal = () => {
     setSelectedTech(null);
     setEditModalIsOpen(false);
-  }
-
-  function submit(formData) {
+    }
+    
+    const submit = (formData) => {
     if (selectedTech) {
-      editTech(selectedTech.id, formData);
-      closeEditModal();
+    editTech(selectedTech.id, formData);
+    closeEditModal();
     } else {
-      addTech(formData);
-      closeCreateModal();
+    addTech(formData);
+    closeCreateModal();
     }
-  }
-
-  function handleDelete() {
+    }
+    
+    const handleDelete = () => {
     if (selectedTech) {
-      deleteTech(selectedTech.id);
-      closeEditModal();
+    deleteTech(selectedTech.id);
+    closeEditModal();
     }
-  }
+    }
 
   Modal.setAppElement("#root");
 

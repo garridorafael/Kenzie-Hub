@@ -11,7 +11,7 @@ import { useContext } from "react";
 import { UserContext } from "../../providers/userProvider";
 import { useState } from "react";
 
-export function Register() {
+export const Register = () => {
   const {
     register,
     handleSubmit,

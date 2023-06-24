@@ -40,9 +40,9 @@ export function NavBarDashboard({ text, onClick }) {
     <CustomNav>
       <div className="navBox">
         <img src={logo} alt="logo Kenzie Hub" />
-        <Link className="logout" to={"/"} onClick={() => logout()}>
+        <button className="logout" to={"/"} onClick={() => logout()}>
           {text}
-        </Link>
+        </button>
       </div>
     </CustomNav>
   );
